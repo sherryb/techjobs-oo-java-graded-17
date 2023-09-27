@@ -89,4 +89,13 @@ public class JobTest {
         assertTrue(job.toString().contains(coreCompetencyValue));
     }
 
+    @Test
+    public void testToStringHandlesEmptyFields() {
+        Job jobA = new Job("Devops Engineer", new Employer("The Devops Company"), new Location(null), new PositionType("Engineer"), new CoreCompetency("Python"));
+        Job jobB = new Job("Devops Engineer", new Employer("The Devops Company"), new Location("Baldur's Gate"), new PositionType("Engineer"), new CoreCompetency(""));
+        String msg = "Data not available";
+        assertTrue(jobA.toString().contains(msg));
+        assertTrue(jobB.toString().contains(msg));
+
+    }
 }
