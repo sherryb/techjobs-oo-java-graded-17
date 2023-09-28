@@ -51,51 +51,41 @@ public class JobTest {
     public void testToStringStartsAndEndsWithNewLine() {
         Job job = new Job("Devops Engineer", new Employer("The Devops Company"), new Location("Baldur's Gate"), new PositionType("Engineer"), new CoreCompetency("Python"));
 
-        assertEquals(System.lineSeparator(), job.toString().substring(0,1));
-        assertEquals(System.lineSeparator(), job.toString().substring(job.toString().length() - 1));
+        assertTrue(job.toString().startsWith(System.lineSeparator()));
+        assertTrue(job.toString().endsWith(System.lineSeparator()));
+
     }
 
     @Test
     public void testToStringContainsCorrectLabelsAndData(){
         Job job = new Job("Devops Engineer", new Employer("The Devops Company"), new Location("Baldur's Gate"), new PositionType("Engineer"), new CoreCompetency("Python"));
 
-        String id = "ID";
-        String name = "Name:";
-        String employer = "Employer:";
-        String location = "Location";
-        String positionType = "Position Type:";
-        String coreCompetency = "Core Competency:";
+        String compare = System.lineSeparator() +
+                "ID: " + job.getId() + System.lineSeparator() +
+                "Name: Devops Engineer" + System.lineSeparator() +
+                "Employer: The Devops Company" + System.lineSeparator() +
+                "Location: Baldur's Gate" + System.lineSeparator() +
+                "Position Type: Engineer" + System.lineSeparator() +
+                "Core Competency: Python" + System.lineSeparator();
 
+        assertEquals(compare, job.toString());
 
-        int idValue = job.getId();
-        String nameValue = "Devops Engineer";
-        String employerValue = "The Devops Company";
-        String locationValue = "Baldur's Gate";
-        String positionTypeValue = "Engineer";
-        String coreCompetencyValue = "Python";
-
-        // Tests themselves
-        assertTrue(job.toString().contains(id));
-        assertTrue(job.toString().contains(String.valueOf(idValue)));
-        assertTrue(job.toString().contains(name));
-        assertTrue(job.toString().contains(nameValue));
-        assertTrue(job.toString().contains(employer));
-        assertTrue(job.toString().contains(employerValue));
-        assertTrue(job.toString().contains(location));
-        assertTrue(job.toString().contains(locationValue));
-        assertTrue(job.toString().contains(positionType));
-        assertTrue(job.toString().contains(positionTypeValue));
-        assertTrue(job.toString().contains(coreCompetency));
-        assertTrue(job.toString().contains(coreCompetencyValue));
     }
 
     @Test
-    public void testToStringHandlesEmptyFields() {
-        Job jobA = new Job("Devops Engineer", new Employer("The Devops Company"), new Location(null), new PositionType("Engineer"), new CoreCompetency("Python"));
-        Job jobB = new Job("Devops Engineer", new Employer("The Devops Company"), new Location("Baldur's Gate"), new PositionType("Engineer"), new CoreCompetency(""));
-        String msg = "Data not available";
-        assertTrue(jobA.toString().contains(msg));
-        assertTrue(jobB.toString().contains(msg));
+    public void testToStringHandlesEmptyField() {
+        Job jobA = new Job("Devops Engineer", new Employer("The Devops Company"), new Location(null), new PositionType(""), new CoreCompetency("Python"));
+
+        String compare = System.lineSeparator() +
+                "ID: " + jobA.getId() + System.lineSeparator() +
+                "Name: Devops Engineer" + System.lineSeparator() +
+                "Employer: The Devops Company" + System.lineSeparator() +
+                "Location: Data not available" + System.lineSeparator() +
+                "Position Type: Data not available" + System.lineSeparator() +
+                "Core Competency: Python" + System.lineSeparator();
+
+        assertEquals(compare, jobA.toString());
+
 
     }
 }
